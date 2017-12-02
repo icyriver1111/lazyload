@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>图片懒加载</title>
+</head>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<style>
+  .container {
+    max-width: 620px;
+    margin: 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+
+  .container img {
+    display: block;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    border: 1px solid;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic1" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic2" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic3" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic4" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic5" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic6" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic7" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic8" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic9" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic10" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic11" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic12" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic13" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic14" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic15" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+    <div class="pics">
+      <img src="https://dummyimage.com/200X200" data-src="https://dummyimage.com/200X200/fff/000000.png&text=pic16" alt="https://dummyimage.com/200X200/fff/000000.png&text=loading"/>
+    </div>
+  </div>
+
+</body>
+
+<script>
+//思路
+//
+lazyRender()
+var clock;
+$(window).on('scroll',function(){
+    if(clock){
+        clearTimeout(clock)
+    }
+    clock = setTimeout(function(){
+        lazyRender()
+    },300)
+})
+function lazyRender(){
+    $('img').each(function(){
+        if( checkShow($(this)) && !isLoaded($(this)) ){
+            loadImg($(this))
+        }
+    })
+}
+function isLoaded($img){
+    return $img.attr('src') === $img.attr('data-src')
+}
+function checkShow($img){
+    var scroll = $(window).scrollTop();
+    var windowHeight = $(window).height();
+    var offsetTop = $img.offset().top;
+    if(offsetTop < scroll + windowHeight  && offsetTop > scroll){
+    return true
+    }
+    return false
+}
+function loadImg($img){
+    $img.attr('src',$img.attr('data-src'))
+}
+
+</script>
+
+</html>
